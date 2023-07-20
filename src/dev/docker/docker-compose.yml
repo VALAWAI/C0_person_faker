@@ -1,0 +1,17 @@
+version: '3.7'
+services:
+  rabbitmq:
+    image: rabbitmq:latest
+    container_name: c0_person_faker_rabbitmq_dev
+    restart: unless-stopped
+    ports:
+      - ${RABBITMQ_MSG_PORT:-5672}:5672
+      - ${RABBITMQ_WEB_PORT:-15672}:15672
+    networks:
+      - c0_person_faker_dev
+    environment:
+      RABBITMQ_DEFAULT_USER: ${RABBITMQ_DEFAULT_USER:-valawai}
+      RABBITMQ_DEFAULT_PASS: ${RABBITMQ_DEFAULT_PASS:-password}
+
+networks:
+  c0_person_faker_dev:
