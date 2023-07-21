@@ -4,7 +4,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>es.csic.iiia.valawai</groupId>
   <artifactId>c0-person-faker</artifactId>
-  <version>0.1.0</version>
+  <version>0.2.0</version>
   <properties>
     <compiler-plugin.version>3.11.0</compiler-plugin.version>
     <maven.compiler.release>17</maven.compiler.release>
@@ -46,6 +46,16 @@
     <dependency>
       <groupId>io.quarkus</groupId>
       <artifactId>quarkus-arc</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>io.quarkiverse.asyncapi</groupId>
+      <artifactId>quarkus-asyncapi</artifactId>
+      <version>0.1.7</version>
+    </dependency>
+    <dependency>
+      <groupId>io.quarkiverse.asyncapi</groupId>
+      <artifactId>quarkus-asyncapi-scanner</artifactId>
+      <version>0.1.7</version>
     </dependency>
     <dependency>
       <groupId>io.quarkus</groupId>

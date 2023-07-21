@@ -1,0 +1,37 @@
+asyncapi: '2.6.0'
+info:
+    title: VALAWAI C0 Person faker
+    version: '0.2.0'
+    description: |
+        This C0 component is used to generate persons with fake data.
+    license:
+        name: MIT
+        url: https://opensource.org/license/mit/
+
+defaultContentType: application/json
+
+channels:
+    valawai.c0.person-faker.data:
+        description: The generater persons with the fake data.
+        publish:
+            summary:
+            message:
+                $ref: '#/components/messages/person'
+                
+components:
+    messages:
+        lightMeasured:
+            name: lightMeasured
+            title: Light measured
+            summary: Inform about environmental lighting conditions of a particular streetlight.
+            contentType: application/json
+            payload:
+                $ref: "#/components/schemas/person"
+    schemas:
+        person:
+            type: object
+            properties:
+                lumens:
+                  type: integer
+                  minimum: 0
+                  description: Light intensity measured in lumens.
