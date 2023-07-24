@@ -11,27 +11,172 @@ info:
 defaultContentType: application/json
 
 channels:
-    valawai.c0.person-faker.data:
-        description: The generater persons with the fake data.
+    valawai.c0.person-faker.data.person:
+        description: Publish information of a person.
         publish:
-            summary:
+            summary: The infomraiton of the generated person
             message:
-                $ref: '#/components/messages/person'
+                $ref: '#/components/messages/newPerson'
+
+    valawai.c0.person-faker.control.set-seed:
+        description: Change the seed to use for the random generator used to create the fake data.
+        subscribe:
+            summary: The new seed to use for the random generator
+            message:
+                $ref: '#/components/messages/seed'
+
+    valawai.c0.person-faker.control.set-sample-rate:
+        description: Change the frequency that a new fake person has to be published
+        subscribe:
+            summary: The new sampling rate
+            message:
+                $ref: '#/components/messages/newSampleRate'
+
+    valawai.c0.person-faker.control.enable:
+        description: Activate or disactiva the generation of fake person.
+        subscribe:
+            summary: The activation/disactivation of this component
+            message:
+                $ref: '#/components/messages/enable'
+
+    valawai.c0.person-faker.data.status:
+        description: Publish the status of the component every time it has changed.
+        publish:
+            summary: The status informaiton of the component
+            message:
+                $ref: '#/components/messages/currentComponentStatus'
                 
 components:
     messages:
-        lightMeasured:
-            name: lightMeasured
-            title: Light measured
-            summary: Inform about environmental lighting conditions of a particular streetlight.
-            contentType: application/json
+        newPerson:
+            name: newPerson
+            title: A new person with fake data
             payload:
                 $ref: "#/components/schemas/person"
+        seed:
+            name: seed
+            title: The seed to use for the random generator.
+            payload:
+                type: integer
+                min: 0
+                description: The value for the random generator seed
+                examples:
+                 - 12345
+        enable:
+            name: enable
+            title: Activate or disactivate this component.
+            payload:
+                type: boolean
+                description: If it is true it enables the service if is false it disable the service
+                examples:
+                 - true
+
+        newSampleRate:
+            name: newSampleRate
+            title: Specify the frequency a person is generated
+            payload:
+                $ref: "#/components/schemas/sampleRate"
+                
+        currentComponentStatus:
+            name: currentComponentStatus
+            title: Activate or disactivate this component.
+            payload:
+                $ref: "#/components/schemas/componentStatus"
+        
     schemas:
         person:
             type: object
             properties:
-                lumens:
+                name:
+                  $ref: "#/components/schemas/personName"
+                gender:
+                  $ref: "#/components/schemas/personGender"
+                age:
                   type: integer
-                  minimum: 0
-                  description: Light intensity measured in lumens.
+                  description: The age of the person.
+                  min: 0
+                  max: 130
+                  examples:
+                    - 43
+        sampleRate:
+          $ref: "#/components/schemas/rate"
+                 
+                    
+        personName:
+            type: object
+            description: A name of a person.
+            properties:
+                prefix:
+                  type: string
+                  description: The prefix of the name such as Mr., Mrs., Ms., Miss, or Dr.
+                  examples:
+                    - Dr.
+                first:
+                  type: string
+                  description: The first name (also known as a given name, forename or Christian name) is a part of a person's personal name.
+                  examples:
+                    - Abbey
+                middle:
+                  type: string
+                  description: The portion of a personal name that is written between the person's first name (given) and their last names (surname).
+                  examples:
+                    - Fitzgerald
+                last:
+                  type: string
+                  description: The last name (surname or family name) is the portion (in some cultures) of a personal name that indicates a person's family (or tribe or community, depending on the culture).
+                  examples:
+                    - Smith
+                suffix:
+                  type: string
+                  description: The suffix of the name such as Jr., Sr., I, II, III, IV, V, MD, DDS, PhD or DVM.
+                  examples:
+                    - Jr.
+                full:
+                  type: string
+                  description: The full name of the person.
+                  examples:
+                    - Dr. Abbey Fitzgerald Smith Jr.
+
+        personGender:
+            type: string
+            description: The possible genders of a person
+            example: Female
+            enum:
+              - Female
+              - Male
+              - Non-binary
+
+        timeUnit:
+            type: string
+            description: The possible unit for a time
+            example: SECONDS
+            enum:
+              - MILLISECONDS
+              - SECONDS
+              - MINUTES
+              - HOURS
+              - DAYS
+
+        componentStatus:
+            type: object
+            description: The current status of this componenet
+            properties:
+              enabled:
+                type: boolean
+                description: If it is true it enables the service if is false it disable the service
+                examples:
+                 - false
+              rate:
+                $ref: "#/components/schemas/rate"
+        rate:
+            type: object
+            description: The frequency that this component will generate a new person. 
+            properties:
+               value:
+                 type: integer
+                 min: 0
+                 description: the number of units for the sample rating
+                 examples:
+                   - 5
+               unit:
+                 $ref: "#/components/schemas/timeUnit"
