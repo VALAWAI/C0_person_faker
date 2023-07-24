@@ -163,7 +163,7 @@ components:
             properties:
               enabled:
                 type: boolean
-                description: If it is true it enables the generation of fake persons, or if is false it disables the generation.
+                description:  If it is true this component is enabled, or false if it is disabled.
                 examples:
                  - false
               rate:
