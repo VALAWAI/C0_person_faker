@@ -12,9 +12,9 @@ defaultContentType: application/json
 
 channels:
     valawai.c0.person-faker.data.person:
-        description: Publish information of a person.
+        description: Publish information about a person.
         publish:
-            summary: The infomraiton of the generated person
+            summary: The information of the generated person
             message:
                 $ref: '#/components/messages/newPerson'
 
@@ -33,16 +33,16 @@ channels:
                 $ref: '#/components/messages/newSampleRate'
 
     valawai.c0.person-faker.control.enable:
-        description: Activate or disactiva the generation of fake person.
+        description: Activate or deactivation the generation of fake person information.
         subscribe:
-            summary: The activation/disactivation of this component
+            summary: The activation/deactivation of this component
             message:
                 $ref: '#/components/messages/enable'
 
     valawai.c0.person-faker.data.status:
         description: Publish the status of the component every time it has changed.
         publish:
-            summary: The status informaiton of the component
+            summary: The status information of the component
             message:
                 $ref: '#/components/messages/currentComponentStatus'
                 
@@ -64,10 +64,10 @@ components:
                  - 12345
         enable:
             name: enable
-            title: Activate or disactivate this component.
+            title: Activate or deactivate this component.
             payload:
                 type: boolean
-                description: If it is true it enables the service if is false it disable the service
+                description: If it is true it activates this component, or if it is false it deactivates this component.
                 examples:
                  - true
 
@@ -79,7 +79,7 @@ components:
                 
         currentComponentStatus:
             name: currentComponentStatus
-            title: Activate or disactivate this component.
+            title: The status of this component.
             payload:
                 $ref: "#/components/schemas/componentStatus"
         
@@ -113,12 +113,12 @@ components:
                     - Dr.
                 first:
                   type: string
-                  description: The first name (also known as a given name, forename or Christian name) is a part of a person's personal name.
+                  description: The first name (also known as a given name, forename or Christian name) is part of a person's name.
                   examples:
                     - Abbey
                 middle:
                   type: string
-                  description: The portion of a personal name that is written between the person's first name (given) and their last names (surname).
+                  description: The portion of a personal name that is written between the person's first name (given) and their last name (surname).
                   examples:
                     - Fitzgerald
                 last:
@@ -159,11 +159,11 @@ components:
 
         componentStatus:
             type: object
-            description: The current status of this componenet
+            description: The current status of this component
             properties:
               enabled:
                 type: boolean
-                description: If it is true it enables the service if is false it disable the service
+                description: If it is true it enables the generation of fake persons, or if is false it disables the generation.
                 examples:
                  - false
               rate:
